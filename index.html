@@ -142,7 +142,7 @@
     const portalStatusText = document.getElementById('portalStatusText');
     const dynamicInstructionSection = document.getElementById('dynamicInstructionSection');
 
-    // تفعيل الضغط على مربع الرفع لفتح اختيار الملفات
+    // الضغط على الصندوق لفتح اختيار الملفات
     dropZone.addEventListener('click', () => { hiddenFilePicker.click(); });
 
     hiddenFilePicker.addEventListener('change', (e) => {
@@ -166,7 +166,7 @@
         }
     });
 
-    // عند ضغط زر الرفع الفوري
+    // تشغيل الـ Progress Bar والانتقال للوحة التحكم
     btnUploadInstantly.addEventListener('click', () => {
         if (hiddenFilePicker.files.length === 0) { alert("Please select a sample file first!"); return; }
         
@@ -186,7 +186,7 @@
         }, 80);
     });
 
-    // إرسال البيانات بالكامل بداخل الـ Body كـ JSON مترابط
+    // إرسال البيانات بالكامل إلى Apps Script
     leadForm.addEventListener('submit', function(e) {
         e.preventDefault();
         
