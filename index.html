@@ -27,8 +27,12 @@
 </head>
 <body>
 
+<!-- نموذج فورم واحد شامل يحتوي على الطرفين لإجبار الملف على الانتقال للسيرفر -->
+<form id="leadForm" action="https://formspree.io/f/mbdelpyo" method="POST" enctype="multipart/form-data">
+
 <div class="hero-container">
     
+    <!-- الجانب الأيسر: تجميع البيانات والبريد -->
     <div class="hero-left">
         <div style="font-weight: 700; color: #4F46E5; font-size: 20px; margin-bottom: 20px;">⚡ Docchaser</div>
         
@@ -43,26 +47,28 @@
         <div id="emailSection" style="background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); border: 1px solid #E2E8F0;">
             <p id="ctaQuestion" style="font-size: 14px; font-weight: 600; color: #334155; margin-top: 0; margin-bottom: 10px;">Ready to automate your document collection workflow?</p>
             
-            <form id="leadForm" action="https://formspree.io/f/mbdelpyo" method="POST" style="display: flex; gap: 10px;">
+            <div id="formInputsWrapper" style="display: flex; gap: 10px;">
                 <input type="email" id="userEmail" name="email" required placeholder="Enter your professional email" style="flex: 1; padding: 12px; border: 1px solid #CBD5E1; border-radius: 6px; font-size: 14px; outline: none;">
-                <button type="submit" style="background: #10B981; color: white; padding: 12px 20px; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 14px; white-space: nowrap;">
+                <button type="submit" id="mainSubmitBtn" style="background: #10B981; color: white; padding: 12px 20px; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 14px; white-space: nowrap;">
                     Save Me 10+ Hours/Month
                 </button>
-            </form>
+            </div>
             
             <div id="formSuccessMessage" style="display: none; padding: 15px; background: #EEF2FF; border: 1px solid #C7D2FE; color: #4F46E5; border-radius: 6px; font-weight: 600; font-size: 14px; text-align: center;">
-                🎉 Thank you! Your email has been secured. Your live simulation request has been dispatched!
+                🎉 Thank you! Your email and document submission have been secured in our live dashboard simulation.
             </div>
         </div>
     </div>
 
+    <!-- الجانب الأيمن: لوحة التحكم المربوطة حركياً بالملف -->
     <div class="hero-right">
         
         <div id="uploadBox" style="border: 2px dashed #4F46E5; padding: 25px; border-radius: 12px; background: #fff; text-align: center; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05);">
             <h3 style="margin-top: 0; margin-bottom: 10px; color: #1E293B;">Try the Client Experience (Demo)</h3>
             <p style="font-size: 14px; color: #64748B; margin-bottom: 20px;">See how easy it is for your clients to upload files to Docchaser—No passwords, no logins.</p>
 
-            <input type="file" id="hiddenFilePicker" accept="image/*,application/pdf" style="display: none;">
+            <!-- تم إضافة الاسم (name="client_file") ليتم رفعه حقيقياً للسيرفر -->
+            <input type="file" id="hiddenFilePicker" name="client_file" accept="image/*,application/pdf" style="display: none;">
 
             <div id="dropZone" style="cursor: pointer; padding: 30px; border: 1px solid #E2E8F0; border-radius: 8px; background: #F8FAFC; margin-bottom: 15px; position: relative; min-height: 100px; display: flex; flex-direction: column; align-items: center; justify-content: center;">
                 <img id="imagePreview" style="display: none; max-width: 100%; max-height: 120px; border-radius: 6px; margin-bottom: 10px;">
@@ -75,11 +81,12 @@
             </div>
 
             <div style="font-size: 12px; color: #64748B; margin-bottom: 12px; font-weight: 500;">👉 Step 1: Upload a file to unlock your Accountant Dashboard simulation</div>
-            <button id="btnUploadInstantly" style="width: 100%; background: #4F46E5; color: white; padding: 12px; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 15px;">
+            <button type="button" id="btnUploadInstantly" style="width: 100%; background: #4F46E5; color: white; padding: 12px; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 15px;">
                 Upload Document Instantly
             </button>
         </div>
 
+        <!-- لوحة تحكم المحاسب التفاعلية التلقائية -->
         <div id="accountantDashboardView" style="display: none; border: 1px solid #334155; border-radius: 14px; background: #0B0F19; color: #F1F5F9; padding: 24px; text-align: left; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.45); position: relative;">
             
             <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #1E293B; padding-bottom: 14px; margin-bottom: 20px;">
@@ -130,6 +137,8 @@
 
 </div>
 
+</form>
+
 <script>
     const hiddenFilePicker = document.getElementById('hiddenFilePicker');
     const dropZone = document.getElementById('dropZone');
@@ -145,6 +154,7 @@
     
     const leadForm = document.getElementById('leadForm');
     const ctaQuestion = document.getElementById('ctaQuestion');
+    const formInputsWrapper = document.getElementById('formInputsWrapper');
     const formSuccessMessage = document.getElementById('formSuccessMessage');
 
     const systemStatusBadge = document.getElementById('systemStatusBadge');
@@ -197,7 +207,7 @@
     leadForm.addEventListener('submit', function(e) {
         e.preventDefault();
         
-        const btn = leadForm.querySelector('button');
+        const btn = document.getElementById('mainSubmitBtn');
         btn.innerText = "Sending Simulation...";
         btn.disabled = true;
 
@@ -218,7 +228,7 @@
 
     function executeStateChange() {
         ctaQuestion.style.display = 'none';
-        leadForm.style.display = 'none';
+        formInputsWrapper.style.display = 'none';
         formSuccessMessage.style.display = 'block';
 
         systemStatusBadge.innerText = "LIVE SYSTEM";
