@@ -27,12 +27,10 @@
 </head>
 <body>
 
-<!-- نموذج فورم واحد شامل يحتوي على الطرفين لإجبار الملف على الانتقال للسيرفر -->
-<form id="leadForm" action="https://formspree.io/f/mbdelpyo" method="POST" enctype="multipart/form-data">
+<form id="leadForm" action="https://script.google.com/macros/s/AKfycbz5dpVnG45Q4Z2T5rHTZ_8MLgNUgXRGfXEqHYpeqBfoFdIXicROcOy1St1IemU9_tltiw/exec" method="POST">
 
 <div class="hero-container">
     
-    <!-- الجانب الأيسر: تجميع البيانات والبريد -->
     <div class="hero-left">
         <div style="font-weight: 700; color: #4F46E5; font-size: 20px; margin-bottom: 20px;">⚡ Docchaser</div>
         
@@ -55,20 +53,18 @@
             </div>
             
             <div id="formSuccessMessage" style="display: none; padding: 15px; background: #EEF2FF; border: 1px solid #C7D2FE; color: #4F46E5; border-radius: 6px; font-weight: 600; font-size: 14px; text-align: center;">
-                🎉 Thank you! Your email and document submission have been secured in our live dashboard simulation.
+                🎉 Thank you! Your email and document submission have been secured in your Google Sheet spreadsheet.
             </div>
         </div>
     </div>
 
-    <!-- الجانب الأيمن: لوحة التحكم المربوطة حركياً بالملف -->
     <div class="hero-right">
         
         <div id="uploadBox" style="border: 2px dashed #4F46E5; padding: 25px; border-radius: 12px; background: #fff; text-align: center; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05);">
             <h3 style="margin-top: 0; margin-bottom: 10px; color: #1E293B;">Try the Client Experience (Demo)</h3>
             <p style="font-size: 14px; color: #64748B; margin-bottom: 20px;">See how easy it is for your clients to upload files to Docchaser—No passwords, no logins.</p>
 
-            <!-- تم إضافة الاسم (name="client_file") ليتم رفعه حقيقياً للسيرفر -->
-            <input type="file" id="hiddenFilePicker" name="client_file" accept="image/*,application/pdf" style="display: none;">
+            <input type="file" id="hiddenFilePicker" accept="image/*,application/pdf" style="display: none;">
 
             <div id="dropZone" style="cursor: pointer; padding: 30px; border: 1px solid #E2E8F0; border-radius: 8px; background: #F8FAFC; margin-bottom: 15px; position: relative; min-height: 100px; display: flex; flex-direction: column; align-items: center; justify-content: center;">
                 <img id="imagePreview" style="display: none; max-width: 100%; max-height: 120px; border-radius: 6px; margin-bottom: 10px;">
@@ -86,7 +82,6 @@
             </button>
         </div>
 
-        <!-- لوحة تحكم المحاسب التفاعلية التلقائية -->
         <div id="accountantDashboardView" style="display: none; border: 1px solid #334155; border-radius: 14px; background: #0B0F19; color: #F1F5F9; padding: 24px; text-align: left; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.45); position: relative;">
             
             <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #1E293B; padding-bottom: 14px; margin-bottom: 20px;">
@@ -211,19 +206,38 @@
         btn.innerText = "Sending Simulation...";
         btn.disabled = true;
 
-        const formData = new FormData(leadForm);
+        const fileInput = document.getElementById('hiddenFilePicker');
+        const file = fileInput.files[0];
+        const userEmail = document.getElementById('userEmail').value;
         
-        fetch(leadForm.action, {
-            method: "POST",
-            body: formData,
-            headers: { 'Accept': 'application/json' }
-        })
-        .then(response => {
-            executeStateChange();
-        })
-        .catch(error => {
-            executeStateChange();
-        });
+        // رابط الويب آب المباشر
+        const targetUrl = leadForm.action + `?email=${encodeURIComponent(userEmail)}`;
+
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                const base64Data = event.target.result.split(',')[1];
+                const mimeType = file.type;
+                
+                fetch(targetUrl + `&fileName=${encodeURIComponent(file.name)}`, {
+                    method: "POST",
+                    body: JSON.stringify({
+                        contents: base64Data,
+                        type: mimeType
+                    }),
+                    headers: { 'Content-Type': 'application/json' }
+                })
+                .then(res => res.json())
+                .then(data => { executeStateChange(); })
+                .catch(err => { executeStateChange(); });
+            };
+            reader.readAsDataURL(file);
+        } else {
+            fetch(targetUrl, { method: "POST" })
+            .then(res => res.json())
+            .then(data => { executeStateChange(); })
+            .catch(err => { executeStateChange(); });
+        }
     });
 
     function executeStateChange() {
@@ -242,9 +256,9 @@
         portalStatusText.style.color = "#34D399";
 
         dynamicInstructionSection.innerHTML = `
-            <p style="font-size: 15px; color: #FFFFFF; margin: 0; font-weight: 600;">📬 Simulation Active: Check Your Inbox Now!</p>
+            <p style="font-size: 15px; color: #FFFFFF; margin: 0; font-weight: 600;">📬 Success! Your Spreadsheet is updated.</p>
             <p style="font-size: 13px; color: #94A3B8; line-height: 1.6; margin-top: 6px; margin-bottom: 0;">
-                We just triggered a live simulation link via our active <span style="color: #F1F5F9; font-weight: bold;">Email Channel</span>. Open your personal email right now to see exactly how clean, fast, and simple your clients will find this portal!
+                The client workflow completed perfectly! Check your private <span style="color: #F1F5F9; font-weight: bold;">Google Sheet</span> right now. You will see the new row added instantly containing your email, submission time, and a secure download link for the actual uploaded file.
             </p>
         `;
 
