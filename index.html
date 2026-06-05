@@ -14,10 +14,18 @@
         .pulse { animation: blinker 1.5s linear infinite; }
         @keyframes blinker { 50% { opacity: 0.4; } }
         
-        /* التنسيق الجديد والأنيق للشارات المقفلة */
-        .channel-badge { padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 600; display: flex; align-items: center; gap: 6px; user-select: none; }
-        .channel-active { background: rgba(16, 185, 129, 0.15); color: #34D399; border: 1px solid rgba(16, 185, 129, 0.4); }
-        .channel-locked { background: rgba(255, 255, 255, 0.03); color: #475569; border: 1px solid rgba(255, 255, 255, 0.05); opacity: 0.4; cursor: not-allowed; }
+        /* التنسيق الاحترافي الجديد لقنوات الإرسال الملونة والمغلقة */
+        .channel-badge { padding: 8px 16px; border-radius: 20px; font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 6px; user-select: none; transition: all 0.2s ease; }
+        
+        /* قناة الإيميل المفعلة */
+        .channel-active { background: rgba(16, 185, 129, 0.15); color: #34D399; border: 1px solid rgba(16, 185, 129, 0.5); }
+        
+        /* القنوات المقفلة بألوانها الحقيقية الجذابة */
+        .channel-whatsapp { background: rgba(37, 211, 102, 0.15); color: #25D366; border: 1px solid rgba(37, 211, 102, 0.4); cursor: not-allowed; }
+        .channel-sms { background: rgba(59, 130, 246, 0.15); color: #60A5FA; border: 1px solid rgba(59, 130, 246, 0.4); cursor: not-allowed; }
+        
+        /* التأثير السحري عند مرور الماوس: تظهر علامة المنع ويتغير الخلفية قليلاً لتنبيهه */
+        .channel-whatsapp:hover, .channel-sms:hover { cursor: not-allowed; background: rgba(239, 68, 68, 0.1); border-color: rgba(239, 68, 68, 0.4); color: #F87171; }
     </style>
 </head>
 <body>
@@ -92,9 +100,9 @@
             <div style="margin-bottom: 20px;">
                 <span style="font-size: 11px; color: #64748B; font-weight: 700; text-transform: uppercase; display: block; margin-bottom: 8px; letter-spacing: 0.5px;">Client Request Channels:</span>
                 <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-                    <div class="channel-badge channel-active">📧 Email Link</div>
-                    <div class="channel-badge channel-locked" title="Unlocked after securing early access">🔒 💬 WhatsApp Portal</div>
-                    <div class="channel-badge channel-locked" title="Unlocked after securing early access">🔒 📱 SMS Smart Link</div>
+                    <div class="channel-badge channel-active" title="Active Live Demo Channel">📧 Email Link</div>
+                    <div class="channel-badge channel-whatsapp" title="Premium Feature - Unlocked after securing early access">🔒 💬 WhatsApp Portal</div>
+                    <div class="channel-badge channel-sms" title="Premium Feature - Unlocked after securing early access">🔒 📱 SMS Smart Link</div>
                 </div>
             </div>
 
