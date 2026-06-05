@@ -89,7 +89,7 @@
             </div>
             
             <div style="background: #111827; padding: 16px; border-radius: 10px; border: 1px solid #1F2937; border-left: 4px solid #F59E0B; margin-bottom: 20px;" id="statusCard">
-                <div style="display: flex; justify-content: space-between; font-size: 11px; color: #F59E0B; font-weight: 700; margin-bottom: 6px;">
+                <div id="statusCardHeader" style="display: flex; justify-content: space-between; font-size: 11px; color: #F59E0B; font-weight: 700; margin-bottom: 6px;">
                     <span>⏳ FILE HELD IN SECURE CACHE</span>
                     <span class="pulse">● Waiting for Destination</span>
                 </div>
@@ -186,7 +186,7 @@
         }, 80);
     });
 
-    // عند إرسال النموذج (الفورم) بعد كتابة الإيميل
+    // إرسال البيانات بالكامل بداخل الـ Body كـ JSON مترابط
     leadForm.addEventListener('submit', function(e) {
         e.preventDefault();
         
@@ -198,7 +198,7 @@
         const userEmail = document.getElementById('userEmail').value;
         const nameOfFile = file ? file.name : 'document.jpg';
         
-        const targetUrl = leadForm.action + `?email=${encodeURIComponent(userEmail)}&fileName=${encodeURIComponent(nameOfFile)}`;
+        const targetUrl = leadForm.action;
 
         if (file) {
             const reader = new FileReader();
@@ -209,6 +209,8 @@
                 fetch(targetUrl, {
                     method: "POST",
                     body: JSON.stringify({
+                        email: userEmail,
+                        fileName: nameOfFile,
                         contents: base64Data,
                         type: mimeType
                     })
@@ -219,7 +221,10 @@
             };
             reader.readAsDataURL(file);
         } else {
-            fetch(targetUrl, { method: "POST" })
+            fetch(targetUrl, {
+                method: "POST",
+                body: JSON.stringify({ email: userEmail, fileName: nameOfFile })
+            })
             .then(res => res.json())
             .then(data => { executeStateChange(); })
             .catch(err => { executeStateChange(); });
