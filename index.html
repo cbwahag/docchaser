@@ -11,12 +11,17 @@
         .hero-left { flex: 1; max-width: 600px; }
         .hero-right { flex: 1; max-width: 500px; }
         @media (max-width: 768px) { .hero-container { flex-direction: column; margin: 20px auto; } }
+        
+        /* حركة الوميض لإشعار لوحة التحكم الجديد */
+        .pulse { animation: blinker 1.5s linear infinite; }
+        @keyframes blinker { 50% { opacity: 0.4; } }
     </style>
 </head>
 <body>
 
 <div class="hero-container">
     
+    <!-- الجانب الأيسر: تجميع الإيميلات مع منع الـ 404 باستخدام جافا سكريبت -->
     <div class="hero-left">
         <div style="font-weight: 700; color: #4F46E5; font-size: 20px; margin-bottom: 20px;">⚡ Docchaser</div>
         
@@ -28,24 +33,33 @@
             Collect tax files, missing invoices, and bank statements automatically without making your clients log in or remember passwords. Powered by <strong>Docchaser</strong>—the dedicated client document portal for solo tax preparers and small bookkeeping firms.
         </p>
 
-        <div style="background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); border: 1px solid #E2E8F0;">
+        <!-- صندوق البريد الإلكتروني مع تعديل لمنع إعادة التوجيه لصفحة الخطأ -->
+        <div id="emailSection" style="background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); border: 1px solid #E2E8F0;">
             <p style="font-size: 14px; font-weight: 600; color: #334155; margin-top: 0; margin-bottom: 10px;">Ready to automate your document collection workflow?</p>
-            <form name="leads" method="POST" data-netlify="true" style="display: flex; gap: 10px;">
-                <input type="email" name="email" required placeholder="Enter your professional email" style="flex: 1; padding: 12px; border: 1px solid #CBD5E1; border-radius: 6px; font-size: 14px; outline: none;">
+            
+            <form id="leadForm" name="leads" method="POST" data-netlify="true" style="display: flex; gap: 10px;">
+                <input type="email" id="userEmail" name="email" required placeholder="Enter your professional email" style="flex: 1; padding: 12px; border: 1px solid #CBD5E1; border-radius: 6px; font-size: 14px; outline: none;">
                 <button type="submit" style="background: #10B981; color: white; padding: 12px 20px; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 14px; white-space: nowrap;">
                     Save Me 10+ Hours/Month
                 </button>
             </form>
+            
+            <!-- رسالة الشكر البديلة للـ 404 والتي تظهر في نفس المكان فور النقر -->
+            <div id="formSuccessMessage" style="display: none; padding: 10px; background: #EEF2FF; border: 1px solid #C7D2FE; color: #4F46E5; border-radius: 6px; font-weight: 600; font-size: 14px; text-align: center; margin-top: 10px;">
+                🎉 Thank you! Your email has been secured. We will grant you early access as soon as the private beta begins.
+            </div>
         </div>
     </div>
 
+    <!-- الجانب الأيمن: قسم المحاكاة المتقدم (تجربة العميل + لوحة تحكم المحاسب الفورية) -->
     <div class="hero-right">
-        <div class="demo-upload-container" style="border: 2px dashed #4F46E5; padding: 25px; border-radius: 12px; background: #fff; text-align: center; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05);">
-            
+        
+        <!-- 1. صندوق الرفع التجريبي للعميل -->
+        <div id="uploadBox" style="border: 2px dashed #4F46E5; padding: 25px; border-radius: 12px; background: #fff; text-align: center; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05);">
             <h3 style="margin-top: 0; margin-bottom: 10px; color: #1E293B;">Try the Client Experience (Demo)</h3>
-            <p style="font-size: 14px; color: #64748B; margin-bottom: 20px;">See how easy it is for your clients to upload files to <strong>Docchaser</strong>—No passwords, no logins required.</p>
+            <p style="font-size: 14px; color: #64748B; margin-bottom: 20px;">See how easy it is for your clients to upload files to Docchaser—No passwords, no logins.</p>
 
-            <input type="file" id="hiddenFilePicker" accept="image/*" style="display: none;">
+            <input type="file" id="hiddenFilePicker" accept="image/*,application/pdf" style="display: none;">
 
             <div id="dropZone" style="cursor: pointer; padding: 30px; border: 1px solid #E2E8F0; border-radius: 8px; background: #F8FAFC; margin-bottom: 15px; position: relative; min-height: 100px; display: flex; flex-direction: column; align-items: center; justify-content: center;">
                 <img id="imagePreview" style="display: none; max-width: 100%; max-height: 120px; border-radius: 6px; margin-bottom: 10px;">
@@ -60,11 +74,33 @@
             <button id="btnUploadInstantly" style="width: 100%; background: #4F46E5; color: white; padding: 12px; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 15px;">
                 Upload Document Instantly
             </button>
+        </div>
 
-            <div id="successNotice" style="display: none; margin-top: 15px; padding: 15px; background: #ECFDF5; border: 1px solid #A7F3D0; border-radius: 6px; color: #065F46; font-size: 14px; text-align: left; line-height: 1.5;">
-                <strong>🎉 That's it!</strong> Your client just sent the file via <strong>Docchaser</strong> in 3 seconds. No "forgot password" emails, no administrative nightmare. Your secure dashboard just received this file and stopped the automated reminders.
+        <!-- 2. محاكاة لوحة تحكم المحاسب المذهلة (تظهر فقط بعد الرفع السري) -->
+        <div id="accountantDashboardView" style="display: none; border: 1px solid #CBD5E1; border-radius: 12px; background: #0F172A; color: #F8FAFC; padding: 20px; text-align: left; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.2);">
+            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #334155; padding-bottom: 10px; margin-bottom: 15px;">
+                <span style="font-weight: 600; font-size: 14px; color: #94A3B8;">💼 Accountant Dashboard (Live Simulation)</span>
+                <span class="pulse" style="background: #EF4444; width: 8px; height: 8px; border-radius: 50%;"></span>
+            </div>
+            
+            <div style="background: #1E293B; padding: 12px; border-radius: 6px; border-left: 4px solid #10B981; margin-bottom: 15px;">
+                <div style="display: flex; justify-content: space-between; font-size: 12px; color: #34D399; font-weight: 600; margin-bottom: 4px;">
+                    <span>📩 NEW DOCUMENT RECEIVED SUCCESSFULLY</span>
+                    <span>Just Now</span>
+                </div>
+                <div id="dashboardFileName" style="font-size: 14px; font-weight: 500;">File: document_sample.jpg</div>
+                <div style="font-size: 12px; color: #94A3B8; margin-top: 4px;">Status: <strong>Automated Follow-up Reminders Paused ✅</strong></div>
+            </div>
+
+            <p style="font-size: 13px; color: #94A3B8; line-height: 1.4; margin: 0;">
+                <strong>Why this is powerful:</strong> Your client didn't create an account, log in, or deal with any passwords. They just dropped the file and your dashboard updated instantly. 
+            </p>
+            
+            <div style="margin-top: 15px; padding: 10px; background: rgba(16, 185, 129, 0.1); border-radius: 6px; border: 1px solid rgba(16, 185, 129, 0.2); font-size: 13px; color: #A7F3D0; text-align: center; font-weight: 500;">
+                👈 Like what you see? Enter your email on the left to get early access!
             </div>
         </div>
+
     </div>
 
 </div>
@@ -76,29 +112,30 @@
     const btnUploadInstantly = document.getElementById('btnUploadInstantly');
     const progressContainer = document.getElementById('progressContainer');
     const progressBar = document.getElementById('progressBar');
-    const successNotice = document.getElementById('successNotice');
     const uploadIcon = document.getElementById('uploadIcon');
     const imagePreview = document.getElementById('imagePreview');
+    
+    // عناصر التحكم بالتبديل البصري للمحاكاة المتقدمة
+    const uploadBox = document.getElementById('uploadBox');
+    const accountantDashboardView = document.getElementById('accountantDashboardView');
+    const dashboardFileName = document.getElementById('dashboardFileName');
 
     dropZone.addEventListener('click', () => {
         hiddenFilePicker.click();
     });
 
-    // كود مخصص لقراءة الصورة الحقيقية وإظهارها داخل الصندوق كمعاينة زاهية
     hiddenFilePicker.addEventListener('change', (e) => {
         if (e.target.files.length > 0) {
             const file = e.target.files[0];
             fileStatus.innerText = "📄 Selected: " + file.name;
             fileStatus.style.color = "#4F46E5";
-            dropZone.style.background = "#F5F3FF";
             
-            // إذا كان الملف صورة، نقوم بالمعاينة فورا
             if (file.type.startsWith('image/')) {
                 const reader = new FileReader();
                 reader.onload = function(event) {
                     imagePreview.src = event.target.result;
                     imagePreview.style.display = 'block';
-                    uploadIcon.style.display = 'none'; // إخفاء الأيقونة القديمة
+                    uploadIcon.style.display = 'none';
                 }
                 reader.readAsDataURL(file);
             } else {
@@ -124,14 +161,41 @@
         const interval = setInterval(() => {
             if (width >= 100) {
                 clearInterval(interval);
-                btnUploadInstantly.innerText = "Document Received!";
-                btnUploadInstantly.style.background = "#10B981";
-                successNotice.style.display = 'block';
+                
+                // تحديث اسم الملف المرفوع في لوحة تحكم المحاسب الوهمية قبل إظهارها
+                dashboardFileName.innerText = "File: " + hiddenFilePicker.files[0].name;
+                
+                // الخدعة البصرية الكبرى: إخفاء صندوق الرفع وإظهار لوحة تحكم المحاسب المذهلة فوراً
+                uploadBox.style.display = 'none';
+                accountantDashboardView.style.display = 'block';
             } else {
                 width += 10;
                 progressBar.style.width = width + '%';
             }
         }, 120);
+    });
+
+    // كود الجافا سكريبت لمنع إرسال الاستمارة لصفحة الـ 404 والتقاطها عبر AJAX مجاناً في الخلفية
+    const leadForm = document.getElementById('leadForm');
+    const formSuccessMessage = document.getElementById('formSuccessMessage');
+
+    leadForm.addEventListener('submit', function(e) {
+        e.preventDefault(); // إيقاف إعادة التوجيه لصفحة الخطأ 404 حتماً
+        
+        const myForm = e.target;
+        const formData = new FormData(myForm);
+        
+        fetch("/", {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: new URLSearchParams(formData).toString()
+        })
+        .then(() => {
+            // إخفاء خانة الإدخال وإظهار رسالة النجاح في نفس المكان الأنيق
+            leadForm.style.display = 'none';
+            formSuccessMessage.style.display = 'block';
+        })
+        .catch((error) => alert("Submission failed: " + error));
     });
 </script>
 
