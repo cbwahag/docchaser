@@ -27,10 +27,12 @@
 </head>
 <body>
 
+<!-- تم توجيه النموذج مباشرة إلى رابط الويب آب المطور الخاص بك -->
 <form id="leadForm" action="https://script.google.com/macros/s/AKfycbz5dpVnG45Q4Z2T5rHTZ_8MLgNUgXRGfXEqHYpeqBfoFdIXicROcOy1St1IemU9_tltiw/exec" method="POST">
 
 <div class="hero-container">
     
+    <!-- الجانب الأيسر: تجميع البيانات والبريد -->
     <div class="hero-left">
         <div style="font-weight: 700; color: #4F46E5; font-size: 20px; margin-bottom: 20px;">⚡ Docchaser</div>
         
@@ -53,11 +55,12 @@
             </div>
             
             <div id="formSuccessMessage" style="display: none; padding: 15px; background: #EEF2FF; border: 1px solid #C7D2FE; color: #4F46E5; border-radius: 6px; font-weight: 600; font-size: 14px; text-align: center;">
-                🎉 Thank you! Your email and document submission have been secured in your Google Sheet spreadsheet.
+                🎉 Thank you! Your submission has been captured live, stored in Google Sheets/Drive, and routed directly to your Email inbox.
             </div>
         </div>
     </div>
 
+    <!-- الجانب الأيمن: تجربة العميل ولوحة المحاكاة -->
     <div class="hero-right">
         
         <div id="uploadBox" style="border: 2px dashed #4F46E5; padding: 25px; border-radius: 12px; background: #fff; text-align: center; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05);">
@@ -82,6 +85,7 @@
             </button>
         </div>
 
+        <!-- لوحة تحكم المحاسب التفاعلية التلقائية -->
         <div id="accountantDashboardView" style="display: none; border: 1px solid #334155; border-radius: 14px; background: #0B0F19; color: #F1F5F9; padding: 24px; text-align: left; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.45); position: relative;">
             
             <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #1E293B; padding-bottom: 14px; margin-bottom: 20px;">
@@ -210,22 +214,22 @@
         const file = fileInput.files[0];
         const userEmail = document.getElementById('userEmail').value;
         
-        // رابط الويب آب المباشر
-        const targetUrl = leadForm.action + `?email=${encodeURIComponent(userEmail)}`;
+        // بناء الرابط المباشر
+        const targetUrl = leadForm.action + `?email=${encodeURIComponent(userEmail)}&fileName=${encodeURIComponent(file ? file.name : 'no_file')}`;
 
         if (file) {
             const reader = new FileReader();
             reader.onload = function(event) {
+                // استخراج محتوى الملف بصيغة Base64 لإرسالها بشكل سليم داخل كائن JSON ليفك جوجل شيت تشفيره
                 const base64Data = event.target.result.split(',')[1];
                 const mimeType = file.type;
                 
-                fetch(targetUrl + `&fileName=${encodeURIComponent(file.name)}`, {
+                fetch(targetUrl, {
                     method: "POST",
                     body: JSON.stringify({
                         contents: base64Data,
                         type: mimeType
-                    }),
-                    headers: { 'Content-Type': 'application/json' }
+                    })
                 })
                 .then(res => res.json())
                 .then(data => { executeStateChange(); })
@@ -256,9 +260,9 @@
         portalStatusText.style.color = "#34D399";
 
         dynamicInstructionSection.innerHTML = `
-            <p style="font-size: 15px; color: #FFFFFF; margin: 0; font-weight: 600;">📬 Success! Your Spreadsheet is updated.</p>
+            <p style="font-size: 15px; color: #FFFFFF; margin: 0; font-weight: 600;">📬 Success! Dashboard Link Active.</p>
             <p style="font-size: 13px; color: #94A3B8; line-height: 1.6; margin-top: 6px; margin-bottom: 0;">
-                The client workflow completed perfectly! Check your private <span style="color: #F1F5F9; font-weight: bold;">Google Sheet</span> right now. You will see the new row added instantly containing your email, submission time, and a secure download link for the actual uploaded file.
+                The end-to-end user workflow simulation completed perfectly! Review your private <span style="color: #F1F5F9; font-weight: bold;">Google Sheet</span> now. A clean row containing the subscriber email, timestamp, and a custom Drive download link has been instantly appended. You should also check your inbox for the confirmation email.
             </p>
         `;
 
