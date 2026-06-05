@@ -27,19 +27,15 @@
 </head>
 <body>
 
-<!-- تم توجيه النموذج مباشرة إلى رابط الويب آب المطور الخاص بك -->
 <form id="leadForm" action="https://script.google.com/macros/s/AKfycbz5dpVnG45Q4Z2T5rHTZ_8MLgNUgXRGfXEqHYpeqBfoFdIXicROcOy1St1IemU9_tltiw/exec" method="POST">
 
 <div class="hero-container">
     
-    <!-- الجانب الأيسر: تجميع البيانات والبريد -->
     <div class="hero-left">
         <div style="font-weight: 700; color: #4F46E5; font-size: 20px; margin-bottom: 20px;">⚡ Docchaser</div>
-        
         <h1 style="font-size: 42px; font-weight: 700; color: #0F172A; line-height: 1.2; margin-bottom: 15px;">
             Stop Chasing Clients for Documents.
         </h1>
-        
         <p style="font-size: 18px; color: #475569; line-height: 1.6; margin-bottom: 30px;">
             Collect tax files, missing invoices, and bank statements automatically without making your clients log in or remember passwords. Powered by <strong>Docchaser</strong>—the dedicated client document portal for solo tax preparers and small bookkeeping firms.
         </p>
@@ -55,16 +51,14 @@
             </div>
             
             <div id="formSuccessMessage" style="display: none; padding: 15px; background: #EEF2FF; border: 1px solid #C7D2FE; color: #4F46E5; border-radius: 6px; font-weight: 600; font-size: 14px; text-align: center;">
-                🎉 Thank you! Your submission has been captured live, stored in Google Sheets/Drive, and routed directly to your Email inbox.
+                🎉 Thank you! Your submission has been captured live, stored in Google Sheets, and the simulation receipt has been routed directly to your Email inbox.
             </div>
         </div>
     </div>
 
-    <!-- الجانب الأيمن: تجربة العميل ولوحة المحاكاة -->
     <div class="hero-right">
-        
         <div id="uploadBox" style="border: 2px dashed #4F46E5; padding: 25px; border-radius: 12px; background: #fff; text-align: center; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05);">
-            <h3 style="margin-top: 0; margin-bottom: 10px; color: #1E293B;">Try the Client Experience (Demo)</h3>
+            <h3>Try the Client Experience (Demo)</h3>
             <p style="font-size: 14px; color: #64748B; margin-bottom: 20px;">See how easy it is for your clients to upload files to Docchaser—No passwords, no logins.</p>
 
             <input type="file" id="hiddenFilePicker" accept="image/*,application/pdf" style="display: none;">
@@ -85,9 +79,7 @@
             </button>
         </div>
 
-        <!-- لوحة تحكم المحاسب التفاعلية التلقائية -->
         <div id="accountantDashboardView" style="display: none; border: 1px solid #334155; border-radius: 14px; background: #0B0F19; color: #F1F5F9; padding: 24px; text-align: left; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.45); position: relative;">
-            
             <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #1E293B; padding-bottom: 14px; margin-bottom: 20px;">
                 <div style="display: flex; gap: 6px; align-items: center;">
                     <span class="win-dot" style="background: #EF4444;"></span>
@@ -98,8 +90,8 @@
                 <span id="systemStatusBadge" style="background: rgba(245, 158, 11, 0.1); color: #F59E0B; font-size: 11px; padding: 4px 10px; border-radius: 6px; font-weight: 700; letter-spacing: 0.5px;">PENDING SETUP</span>
             </div>
             
-            <div style="background: #111827; padding: 16px; border-radius: 10px; border: 1px solid #1F2937; border-left: 4px solid #F59E0B; margin-bottom: 20px; box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);" id="statusCard">
-                <div style="display: flex; justify-content: space-between; font-size: 11px; color: #F59E0B; font-weight: 700; margin-bottom: 6px; letter-spacing: 0.5px;" id="statusCardHeader">
+            <div style="background: #111827; padding: 16px; border-radius: 10px; border: 1px solid #1F2937; border-left: 4px solid #F59E0B; margin-bottom: 20px;" id="statusCard">
+                <div style="display: flex; justify-content: space-between; font-size: 11px; color: #F59E0B; font-weight: 700; margin-bottom: 6px;">
                     <span>⏳ FILE HELD IN SECURE CACHE</span>
                     <span class="pulse">● Waiting for Destination</span>
                 </div>
@@ -110,30 +102,26 @@
             </div>
 
             <div style="margin-bottom: 22px;">
-                <span style="font-size: 11px; color: #4B5563; font-weight: 700; text-transform: uppercase; display: block; margin-bottom: 10px; letter-spacing: 0.5px;">Client Request Channels:</span>
+                <span style="font-size: 11px; color: #4B5563; font-weight: 700; display: block; margin-bottom: 10px;">Client Request Channels:</span>
                 <div class="channels-row">
-                    <div class="channel-badge channel-active" title="Active Live Demo Channel">📧 Email Link</div>
-                    <div class="channel-badge channel-whatsapp" title="Premium Feature - Unlocked after securing early access">🔒 💬 WhatsApp</div>
-                    <div class="channel-badge channel-sms" title="Premium Feature - Unlocked after securing early access">🔒 📱 SMS Link</div>
+                    <div class="channel-badge channel-active">📧 Email Link</div>
+                    <div class="channel-badge channel-whatsapp">🔒 💬 WhatsApp</div>
+                    <div class="channel-badge channel-sms">🔒 📱 SMS Link</div>
                 </div>
             </div>
 
             <div id="dynamicInstructionSection" style="border-top: 1px solid #1E293B; padding-top: 18px;">
-                <p style="font-size: 15px; color: #F59E0B; margin: 0; font-weight: 600; display: flex; align-items: center; gap: 8px;">
-                    🔒 Connect Destination Email to Test Live Receipt
-                </p>
+                <p style="font-size: 15px; color: #F59E0B; margin: 0; font-weight: 600;">🔒 Connect Destination Email to Test Live Receipt</p>
                 <p style="font-size: 13px; color: #94A3B8; line-height: 1.6; margin-top: 6px; margin-bottom: 0;">
                     To securely trigger the live client experience, <span style="color: #F1F5F9; font-weight: bold;">enter your professional email on the left form👈</span>. Our active Email Channel will immediately route this simulation to your inbox.
                 </p>
             </div>
             
-            <div id="dashboardFooterBadge" style="margin-top: 20px; padding: 12px; background: rgba(245, 158, 11, 0.05); border-radius: 8px; border: 1px solid rgba(245, 158, 11, 0.1); font-size: 12px; color: #FCD34D; text-align: center; font-weight: 500; letter-spacing: 0.2px;">
+            <div id="dashboardFooterBadge" style="margin-top: 20px; padding: 12px; background: rgba(245, 158, 11, 0.05); border-radius: 8px; border: 1px solid rgba(245, 158, 11, 0.1); font-size: 12px; color: #FCD34D; text-align: center;">
                 🔑 Enter email on the left to verify the automated workflow.
             </div>
         </div>
-
     </div>
-
 </div>
 
 </form>
@@ -213,35 +201,15 @@
         const fileInput = document.getElementById('hiddenFilePicker');
         const file = fileInput.files[0];
         const userEmail = document.getElementById('userEmail').value;
+        const nameOfFile = file ? file.name : 'Sample_Document.jpg';
         
-        // بناء الرابط المباشر
-        const targetUrl = leadForm.action + `?email=${encodeURIComponent(userEmail)}&fileName=${encodeURIComponent(file ? file.name : 'no_file')}`;
+        // إرسال طلب خفيف جداً لتجنب قيود الحجم والحظر الأمني
+        const targetUrl = leadForm.action + `?email=${encodeURIComponent(userEmail)}&fileName=${encodeURIComponent(nameOfFile)}`;
 
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function(event) {
-                // استخراج محتوى الملف بصيغة Base64 لإرسالها بشكل سليم داخل كائن JSON ليفك جوجل شيت تشفيره
-                const base64Data = event.target.result.split(',')[1];
-                const mimeType = file.type;
-                
-                fetch(targetUrl, {
-                    method: "POST",
-                    body: JSON.stringify({
-                        contents: base64Data,
-                        type: mimeType
-                    })
-                })
-                .then(res => res.json())
-                .then(data => { executeStateChange(); })
-                .catch(err => { executeStateChange(); });
-            };
-            reader.readAsDataURL(file);
-        } else {
-            fetch(targetUrl, { method: "POST" })
-            .then(res => res.json())
-            .then(data => { executeStateChange(); })
-            .catch(err => { executeStateChange(); });
-        }
+        fetch(targetUrl, { method: "POST" })
+        .then(res => res.json())
+        .then(data => { executeStateChange(); })
+        .catch(err => { executeStateChange(); });
     });
 
     function executeStateChange() {
@@ -255,14 +223,14 @@
 
         statusCard.style.borderLeftColor = "#10B981";
         statusCardHeader.style.color = "#34D399";
-        statusCardHeader.innerHTML = '<span>📩 NEW DOCUMENT RECEIVED SUCCESSFULLY</span><span class="pulse">● Just Now</span>';
+        statusCardHeader.innerHTML = '<span>📩 SIMULATION RECEIPT DISPATCHED</span><span class="pulse">● Just Now</span>';
         portalStatusText.innerText = "Automated Follow-up Reminders Paused ✅";
         portalStatusText.style.color = "#34D399";
 
         dynamicInstructionSection.innerHTML = `
-            <p style="font-size: 15px; color: #FFFFFF; margin: 0; font-weight: 600;">📬 Success! Dashboard Link Active.</p>
+            <p style="font-size: 15px; color: #FFFFFF; margin: 0; font-weight: 600;">📬 Check Your Inbox Now!</p>
             <p style="font-size: 13px; color: #94A3B8; line-height: 1.6; margin-top: 6px; margin-bottom: 0;">
-                The end-to-end user workflow simulation completed perfectly! Review your private <span style="color: #F1F5F9; font-weight: bold;">Google Sheet</span> now. A clean row containing the subscriber email, timestamp, and a custom Drive download link has been instantly appended. You should also check your inbox for the confirmation email.
+                The workflow simulation completed perfectly! Your email was logged into the firm's private <span style="color: #F1F5F9; font-weight: bold;">Google Sheet</span>, and a full simulation breakdown statement has been instantly sent to your inbox.
             </p>
         `;
 
