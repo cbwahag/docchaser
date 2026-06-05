@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Stop Chasing Clients for Documents | Docchaser</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght=400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #F3F4F6; margin: 0; padding: 0; }
+        body { font-family: 'Inter', sans-serif; background-color: #F8FAFC; margin: 0; padding: 0; }
         .hero-container { display: flex; flex-direction: row; max-width: 1200px; margin: 60px auto; padding: 20px; gap: 40px; justify-content: center; align-items: center; }
         .hero-left { flex: 1; max-width: 600px; }
         .hero-right { flex: 1; max-width: 500px; }
@@ -20,43 +20,44 @@
     <div class="hero-left">
         <div style="font-weight: 700; color: #4F46E5; font-size: 20px; margin-bottom: 20px;">⚡ Docchaser</div>
         
-        <h1 style="font-size: 42px; font-weight: 700; color: #111827; line-height: 1.2; margin-bottom: 15px;">
+        <h1 style="font-size: 42px; font-weight: 700; color: #0F172A; line-height: 1.2; margin-bottom: 15px;">
             Stop Chasing Clients for Documents.
         </h1>
         
-        <p style="font-size: 18px; color: #4B5563; line-height: 1.6; margin-bottom: 30px;">
+        <p style="font-size: 18px; color: #475569; line-height: 1.6; margin-bottom: 30px;">
             Collect tax files, missing invoices, and bank statements automatically without making your clients log in or remember passwords. Powered by <strong>Docchaser</strong>—the dedicated client document portal for solo tax preparers and small bookkeeping firms.
         </p>
 
-        <div style="background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);">
-            <p style="font-size: 14px; font-weight: 600; color: #374151; margin-top: 0; margin-bottom: 10px;">Ready to automate your document collection workflow?</p>
-            <div style="display: flex; gap: 10px;">
-                <input type="email" placeholder="Enter your professional email" style="flex: 1; padding: 12px; border: 1px solid #D1D5DB; border-radius: 6px; font-size: 14px;">
-                <button style="background: #10B981; color: white; padding: 12px 20px; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 14px; white-space: nowrap;">
+        <div style="background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); border: 1px solid #E2E8F0;">
+            <p style="font-size: 14px; font-weight: 600; color: #334155; margin-top: 0; margin-bottom: 10px;">Ready to automate your document collection workflow?</p>
+            <form name="leads" method="POST" data-netlify="true" style="display: flex; gap: 10px;">
+                <input type="email" name="email" required placeholder="Enter your professional email" style="flex: 1; padding: 12px; border: 1px solid #CBD5E1; border-radius: 6px; font-size: 14px; outline: none;">
+                <button type="submit" style="background: #10B981; color: white; padding: 12px 20px; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 14px; white-space: nowrap;">
                     Save Me 10+ Hours/Month
                 </button>
-            </div>
+            </form>
         </div>
     </div>
 
     <div class="hero-right">
         <div class="demo-upload-container" style="border: 2px dashed #4F46E5; padding: 25px; border-radius: 12px; background: #fff; text-align: center; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05);">
             
-            <h3 style="margin-top: 0; margin-bottom: 10px; color: #1F2937;">Try the Client Experience (Demo)</h3>
-            <p style="font-size: 14px; color: #6B7280; margin-bottom: 20px;">See how easy it is for your clients to upload files to <strong>Docchaser</strong>—No passwords, no logins required.</p>
+            <h3 style="margin-top: 0; margin-bottom: 10px; color: #1E293B;">Try the Client Experience (Demo)</h3>
+            <p style="font-size: 14px; color: #64748B; margin-bottom: 20px;">See how easy it is for your clients to upload files to <strong>Docchaser</strong>—No passwords, no logins required.</p>
 
-            <input type="file" id="hiddenFilePicker" accept="image/*,application/pdf" style="display: none;">
+            <input type="file" id="hiddenFilePicker" accept="image/*" style="display: none;">
 
-            <div id="dropZone" style="cursor: pointer; padding: 30px; border: 1px solid #E5E7EB; border-radius: 8px; background: #F9FAFB; margin-bottom: 15px; transition: background 0.2s;">
+            <div id="dropZone" style="cursor: pointer; padding: 30px; border: 1px solid #E2E8F0; border-radius: 8px; background: #F8FAFC; margin-bottom: 15px; position: relative; min-height: 100px; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                <img id="imagePreview" style="display: none; max-width: 100%; max-height: 120px; border-radius: 6px; margin-bottom: 10px;">
                 <span id="uploadIcon" style="font-size: 32px;">📁</span>
-                <p id="fileStatus" style="margin-top: 10px; font-weight: 500; color: #374151; font-size: 14px;">Click here to select a sample document/image</p>
+                <p id="fileStatus" style="margin-top: 10px; font-weight: 500; color: #475569; font-size: 14px; margin-bottom: 0;">Click here to select a sample document/image</p>
             </div>
 
-            <div id="progressContainer" style="display: none; width: 100%; background-color: #E5E7EB; border-radius: 4px; margin-bottom: 15px;">
+            <div id="progressContainer" style="display: none; width: 100%; background-color: #E2E8F0; border-radius: 4px; margin-bottom: 15px;">
                 <div id="progressBar" style="width: 0%; height: 8px; background-color: #10B981; border-radius: 4px; transition: width 0.2s;"></div>
             </div>
 
-            <button id="btnUploadInstantly" style="width: 100%; background: #4F46E5; color: white; padding: 12px; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 15px; transition: background 0.2s;">
+            <button id="btnUploadInstantly" style="width: 100%; background: #4F46E5; color: white; padding: 12px; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 15px;">
                 Upload Document Instantly
             </button>
 
@@ -77,23 +78,36 @@
     const progressBar = document.getElementById('progressBar');
     const successNotice = document.getElementById('successNotice');
     const uploadIcon = document.getElementById('uploadIcon');
+    const imagePreview = document.getElementById('imagePreview');
 
-    // 1. فتح نافذة اختيار الملفات عند النقر على منطقة الإسقاط
     dropZone.addEventListener('click', () => {
         hiddenFilePicker.click();
     });
 
-    // 2. تحديث الواجهة فور اختيار الملف لتأكيد تفاعل المتصفح
+    // كود مخصص لقراءة الصورة الحقيقية وإظهارها داخل الصندوق كمعاينة زاهية
     hiddenFilePicker.addEventListener('change', (e) => {
         if (e.target.files.length > 0) {
-            fileStatus.innerText = "📄 Selected: " + e.target.files[0].name;
+            const file = e.target.files[0];
+            fileStatus.innerText = "📄 Selected: " + file.name;
             fileStatus.style.color = "#4F46E5";
-            uploadIcon.innerText = "✅";
-            dropZone.style.background = "#EEF2FF";
+            dropZone.style.background = "#F5F3FF";
+            
+            // إذا كان الملف صورة، نقوم بالمعاينة فورا
+            if (file.type.startsWith('image/')) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    imagePreview.src = event.target.result;
+                    imagePreview.style.display = 'block';
+                    uploadIcon.style.display = 'none'; // إخفاء الأيقونة القديمة
+                }
+                reader.readAsDataURL(file);
+            } else {
+                uploadIcon.innerText = "✅";
+                imagePreview.style.display = 'none';
+            }
         }
     });
 
-    // 3. بدء محاكاة الرفع وإظهار شريط التحميل ثم رسالة الإقناع النهائية
     btnUploadInstantly.addEventListener('click', () => {
         if (hiddenFilePicker.files.length === 0) {
             alert("Please select a sample file first to try the demo!");
@@ -117,7 +131,7 @@
                 width += 10;
                 progressBar.style.width = width + '%';
             }
-        }, 120); // سرعة ملائمة جداً للمحاكاة
+        }, 120);
     });
 </script>
 
