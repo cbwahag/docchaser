@@ -20,8 +20,6 @@
         .channel-active { background: rgba(16, 185, 129, 0.12); color: #34D399; border: 1px solid rgba(16, 185, 129, 0.4); }
         .channel-whatsapp { background: rgba(37, 211, 102, 0.12); color: #25D366; border: 1px solid rgba(37, 211, 102, 0.3); }
         .channel-sms { background: rgba(59, 130, 246, 0.12); color: #60A5FA; border: 1px solid rgba(59, 130, 246, 0.3); }
-        
-        .channel-whatsapp:hover, .channel-sms:hover { cursor: not-allowed; background: rgba(239, 68, 68, 0.1); border-color: rgba(239, 68, 68, 0.4); color: #F87171; }
         .win-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
     </style>
 </head>
@@ -51,7 +49,7 @@
             </div>
             
             <div id="formSuccessMessage" style="display: none; padding: 15px; background: #EEF2FF; border: 1px solid #C7D2FE; color: #4F46E5; border-radius: 6px; font-weight: 600; font-size: 14px; text-align: center;">
-                🎉 Thank you! Your submission has been captured live, stored in Google Sheets, and the simulation receipt has been routed directly to your Email inbox.
+                🎉 Thank you! Your email has been logged, and your secure custom PDF document has been delivered straight to your inbox.
             </div>
         </div>
     </div>
@@ -66,7 +64,7 @@
             <div id="dropZone" style="cursor: pointer; padding: 30px; border: 1px solid #E2E8F0; border-radius: 8px; background: #F8FAFC; margin-bottom: 15px; position: relative; min-height: 100px; display: flex; flex-direction: column; align-items: center; justify-content: center;">
                 <img id="imagePreview" style="display: none; max-width: 100%; max-height: 120px; border-radius: 6px; margin-bottom: 10px;">
                 <span id="uploadIcon" style="font-size: 32px;">📁</span>
-                <p id="fileStatus" style="margin-top: 10px; font-weight: 500; color: #475569; font-size: 14px; margin-bottom: 0;">Click here to select a sample document/image</p>
+                <p id="fileStatus" style="margin-top: 10px; font-weight: 500; color: #475569; font-size: 14px; margin-bottom: 0;">Click here to select a sample document/image/PDF</p>
             </div>
 
             <div id="progressContainer" style="display: none; width: 100%; background-color: #E2E8F0; border-radius: 4px; margin-bottom: 15px;">
@@ -87,7 +85,7 @@
                     <span class="win-dot" style="background: #10B981;"></span>
                     <span style="font-weight: 600; font-size: 13px; color: #64748B; margin-left: 8px;">Docchaser Workspace v1.0</span>
                 </div>
-                <span id="systemStatusBadge" style="background: rgba(245, 158, 11, 0.1); color: #F59E0B; font-size: 11px; padding: 4px 10px; border-radius: 6px; font-weight: 700; letter-spacing: 0.5px;">PENDING SETUP</span>
+                <span id="systemStatusBadge" style="background: rgba(245, 158, 11, 0.1); color: #F59E0B; font-size: 11px; padding: 4px 10px; border-radius: 6px; font-weight: 700;">PENDING SETUP</span>
             </div>
             
             <div style="background: #111827; padding: 16px; border-radius: 10px; border: 1px solid #1F2937; border-left: 4px solid #F59E0B; margin-bottom: 20px;" id="statusCard">
@@ -105,8 +103,6 @@
                 <span style="font-size: 11px; color: #4B5563; font-weight: 700; display: block; margin-bottom: 10px;">Client Request Channels:</span>
                 <div class="channels-row">
                     <div class="channel-badge channel-active">📧 Email Link</div>
-                    <div class="channel-badge channel-whatsapp">🔒 💬 WhatsApp</div>
-                    <div class="channel-badge channel-sms">🔒 📱 SMS Link</div>
                 </div>
             </div>
 
@@ -115,10 +111,6 @@
                 <p style="font-size: 13px; color: #94A3B8; line-height: 1.6; margin-top: 6px; margin-bottom: 0;">
                     To securely trigger the live client experience, <span style="color: #F1F5F9; font-weight: bold;">enter your professional email on the left form👈</span>. Our active Email Channel will immediately route this simulation to your inbox.
                 </p>
-            </div>
-            
-            <div id="dashboardFooterBadge" style="margin-top: 20px; padding: 12px; background: rgba(245, 158, 11, 0.05); border-radius: 8px; border: 1px solid rgba(245, 158, 11, 0.1); font-size: 12px; color: #FCD34D; text-align: center;">
-                🔑 Enter email on the left to verify the automated workflow.
             </div>
         </div>
     </div>
@@ -149,7 +141,6 @@
     const statusCardHeader = document.getElementById('statusCardHeader');
     const portalStatusText = document.getElementById('portalStatusText');
     const dynamicInstructionSection = document.getElementById('dynamicInstructionSection');
-    const dashboardFooterBadge = document.getElementById('dashboardFooterBadge');
 
     dropZone.addEventListener('click', () => { hiddenFilePicker.click(); });
 
@@ -195,51 +186,11 @@
         e.preventDefault();
         
         const btn = document.getElementById('mainSubmitBtn');
-        btn.innerText = "Sending Simulation...";
+        btn.innerText = "Sending PDF Simulation...";
         btn.disabled = true;
 
         const fileInput = document.getElementById('hiddenFilePicker');
         const file = fileInput.files[0];
         const userEmail = document.getElementById('userEmail').value;
-        const nameOfFile = file ? file.name : 'Sample_Document.jpg';
         
-        // إرسال طلب خفيف جداً لتجنب قيود الحجم والحظر الأمني
-        const targetUrl = leadForm.action + `?email=${encodeURIComponent(userEmail)}&fileName=${encodeURIComponent(nameOfFile)}`;
-
-        fetch(targetUrl, { method: "POST" })
-        .then(res => res.json())
-        .then(data => { executeStateChange(); })
-        .catch(err => { executeStateChange(); });
-    });
-
-    function executeStateChange() {
-        ctaQuestion.style.display = 'none';
-        formInputsWrapper.style.display = 'none';
-        formSuccessMessage.style.display = 'block';
-
-        systemStatusBadge.innerText = "LIVE SYSTEM";
-        systemStatusBadge.style.background = "rgba(16, 185, 129, 0.1)";
-        systemStatusBadge.style.color = "#10B981";
-
-        statusCard.style.borderLeftColor = "#10B981";
-        statusCardHeader.style.color = "#34D399";
-        statusCardHeader.innerHTML = '<span>📩 SIMULATION RECEIPT DISPATCHED</span><span class="pulse">● Just Now</span>';
-        portalStatusText.innerText = "Automated Follow-up Reminders Paused ✅";
-        portalStatusText.style.color = "#34D399";
-
-        dynamicInstructionSection.innerHTML = `
-            <p style="font-size: 15px; color: #FFFFFF; margin: 0; font-weight: 600;">📬 Check Your Inbox Now!</p>
-            <p style="font-size: 13px; color: #94A3B8; line-height: 1.6; margin-top: 6px; margin-bottom: 0;">
-                The workflow simulation completed perfectly! Your email was logged into the firm's private <span style="color: #F1F5F9; font-weight: bold;">Google Sheet</span>, and a full simulation breakdown statement has been instantly sent to your inbox.
-            </p>
-        `;
-
-        dashboardFooterBadge.style.background = "rgba(79, 70, 229, 0.1)";
-        dashboardFooterBadge.style.borderColor = "rgba(79, 70, 229, 0.2)";
-        dashboardFooterBadge.style.color = "#A5B4FC";
-        dashboardFooterBadge.innerText = "🚀 Experience the automated power of Docchaser firsthand.";
-    }
-</script>
-
-</body>
-</html>
+        const targetUrl = leadForm.action + `?email=${encode
