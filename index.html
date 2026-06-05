@@ -14,18 +14,20 @@
         .pulse { animation: blinker 1.5s linear infinite; }
         @keyframes blinker { 50% { opacity: 0.4; } }
         
-        /* التنسيق الاحترافي الجديد لقنوات الإرسال الملونة والمغلقة */
-        .channel-badge { padding: 8px 16px; border-radius: 20px; font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 6px; user-select: none; transition: all 0.2s ease; }
+        /* تنسيق قنوات الإرسال الموحدة في صف واحد */
+        .channels-row { display: flex; gap: 8px; justify-content: flex-start; align-items: center; width: 100%; }
+        .channel-badge { flex: 1; padding: 8px 10px; border-radius: 8px; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 4px; user-select: none; transition: all 0.2s ease; white-space: nowrap; }
         
-        /* قناة الإيميل المفعلة */
-        .channel-active { background: rgba(16, 185, 129, 0.15); color: #34D399; border: 1px solid rgba(16, 185, 129, 0.5); }
+        /* قنوات ملونة وجذابة */
+        .channel-active { background: rgba(16, 185, 129, 0.12); color: #34D399; border: 1px solid rgba(16, 185, 129, 0.4); }
+        .channel-whatsapp { background: rgba(37, 211, 102, 0.12); color: #25D366; border: 1px solid rgba(37, 211, 102, 0.3); }
+        .channel-sms { background: rgba(59, 130, 246, 0.12); color: #60A5FA; border: 1px solid rgba(59, 130, 246, 0.3); }
         
-        /* القنوات المقفلة بألوانها الحقيقية الجذابة */
-        .channel-whatsapp { background: rgba(37, 211, 102, 0.15); color: #25D366; border: 1px solid rgba(37, 211, 102, 0.4); cursor: not-allowed; }
-        .channel-sms { background: rgba(59, 130, 246, 0.15); color: #60A5FA; border: 1px solid rgba(59, 130, 246, 0.4); cursor: not-allowed; }
-        
-        /* التأثير السحري عند مرور الماوس: تظهر علامة المنع ويتغير الخلفية قليلاً لتنبيهه */
+        /* تأثير الماوس لمنع النقر الفضولي مع الحفاظ على التباين */
         .channel-whatsapp:hover, .channel-sms:hover { cursor: not-allowed; background: rgba(239, 68, 68, 0.1); border-color: rgba(239, 68, 68, 0.4); color: #F87171; }
+        
+        /* نقاط محاكاة نظام التشغيل لتبدو كبرنامج حقيقي */
+        .win-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
     </style>
 </head>
 <body>
@@ -82,38 +84,48 @@
             </button>
         </div>
 
-        <div id="accountantDashboardView" style="display: none; border: 1px solid #CBD5E1; border-radius: 12px; background: #0F172A; color: #F8FAFC; padding: 20px; text-align: left; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.2);">
-            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #334155; padding-bottom: 10px; margin-bottom: 15px;">
-                <span style="font-weight: 600; font-size: 14px; color: #94A3B8;">💼 Accountant Dashboard (Live Simulation)</span>
-                <span class="pulse" style="background: #10B981; width: 8px; height: 8px; border-radius: 50%;"></span>
+        <div id="accountantDashboardView" style="display: none; border: 1px solid #334155; border-radius: 14px; background: #0B0F19; color: #F1F5F9; padding: 24px; text-align: left; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.45); position: relative;">
+            
+            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #1E293B; padding-bottom: 14px; margin-bottom: 20px;">
+                <div style="display: flex; gap: 6px; align-items: center;">
+                    <span class="win-dot" style="background: #EF4444;"></span>
+                    <span class="win-dot" style="background: #F59E0B;"></span>
+                    <span class="win-dot" style="background: #10B981;"></span>
+                    <span style="font-weight: 600; font-size: 13px; color: #64748B; margin-left: 8px;">Docchaser Workspace v1.0</span>
+                </div>
+                <span style="background: rgba(16, 185, 129, 0.1); color: #10B981; font-size: 11px; padding: 4px 10px; border-radius: 6px; font-weight: 700; letter-spacing: 0.5px;">LIVE SYSTEM</span>
             </div>
             
-            <div style="background: #1E293B; padding: 12px; border-radius: 6px; border-left: 4px solid #10B981; margin-bottom: 15px;">
-                <div style="display: flex; justify-content: space-between; font-size: 12px; color: #34D399; font-weight: 600; margin-bottom: 4px;">
-                    <span>📩 NEW DOCUMENT RECEIVED SUCCESSFULLY</span>
-                    <span>Just Now</span>
+            <div style="background: #111827; padding: 16px; border-radius: 10px; border: 1px solid #1F2937; border-left: 4px solid #10B981; margin-bottom: 20px; box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);">
+                <div style="display: flex; justify-content: space-between; font-size: 11px; color: #34D399; font-weight: 700; margin-bottom: 6px; letter-spacing: 0.5px;">
+                    <span>📩 NEW DOCUMENT RECEIVED</span>
+                    <span class="pulse">● Just Now</span>
                 </div>
-                <div id="dashboardFileName" style="font-size: 14px; font-weight: 500;">File: document_sample.jpg</div>
-                <div style="font-size: 12px; color: #94A3B8; margin-top: 4px;">Status: <strong>Automated Follow-up Reminders Paused ✅</strong></div>
+                <div id="dashboardFileName" style="font-size: 15px; font-weight: 600; color: #FFFFFF;">File: document_sample.jpg</div>
+                <div style="font-size: 12px; color: #94A3B8; margin-top: 6px; display: flex; align-items: center; gap: 4px;">
+                    <span>Status:</span> <strong style="color: #34D399;">Automated Follow-up Reminders Paused ✅</strong>
+                </div>
             </div>
 
-            <div style="margin-bottom: 20px;">
-                <span style="font-size: 11px; color: #64748B; font-weight: 700; text-transform: uppercase; display: block; margin-bottom: 8px; letter-spacing: 0.5px;">Client Request Channels:</span>
-                <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <div style="margin-bottom: 22px;">
+                <span style="font-size: 11px; color: #4B5563; font-weight: 700; text-transform: uppercase; display: block; margin-bottom: 10px; letter-spacing: 0.5px;">Client Request Channels:</span>
+                <div class="channels-row">
                     <div class="channel-badge channel-active" title="Active Live Demo Channel">📧 Email Link</div>
-                    <div class="channel-badge channel-whatsapp" title="Premium Feature - Unlocked after securing early access">🔒 💬 WhatsApp Portal</div>
-                    <div class="channel-badge channel-sms" title="Premium Feature - Unlocked after securing early access">🔒 📱 SMS Smart Link</div>
+                    <div class="channel-badge channel-whatsapp" title="Premium Feature - Unlocked after securing early access">🔒 💬 WhatsApp</div>
+                    <div class="channel-badge channel-sms" title="Premium Feature - Unlocked after securing early access">🔒 📱 SMS Link</div>
                 </div>
             </div>
 
-            <p style="font-size: 15px; color: #F8FAFC; line-height: 1.5; margin: 0; font-weight: 500;">
-                📬 Simulation Active: Check Your Inbox Now!
-            </p>
-            <p style="font-size: 13px; color: #94A3B8; line-height: 1.5; margin-top: 5px; margin-bottom: 0;">
-                We just triggered a live simulation link via our active **Email Channel**. Open your personal email right now to see exactly how clean, fast, and simple your clients will find this portal!
-            </p>
+            <div style="border-top: 1px solid #1E293B; padding-top: 18px;">
+                <p style="font-size: 15px; color: #FFFFFF; margin: 0; font-weight: 600; display: flex; align-items: center; gap: 8px;">
+                    📬 Simulation Active: Check Your Inbox Now!
+                </p>
+                <p style="font-size: 13px; color: #94A3B8; line-height: 1.6; margin-top: 6px; margin-bottom: 0;">
+                    We just triggered a live simulation link via our active <span style="color: #F1F5F9; font-weight: 500;">Email Channel</span>. Open your personal email right now to see exactly how clean, fast, and simple your clients will find this portal!
+                </p>
+            </div>
             
-            <div style="margin-top: 15px; padding: 10px; background: rgba(16, 185, 129, 0.05); border-radius: 6px; border: 1px solid rgba(16, 185, 129, 0.1); font-size: 13px; color: #A7F3D0; text-align: center; font-weight: 500;">
+            <div style="margin-top: 20px; padding: 12px; background: rgba(79, 70, 229, 0.1); border-radius: 8px; border: 1px solid rgba(79, 70, 229, 0.2); font-size: 12px; color: #A5B4FC; text-align: center; font-weight: 500; letter-spacing: 0.2px;">
                 🚀 Experience the automated power of Docchaser firsthand.
             </div>
         </div>
