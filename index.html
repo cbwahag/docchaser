@@ -14,19 +14,14 @@
         .pulse { animation: blinker 1.5s linear infinite; }
         @keyframes blinker { 50% { opacity: 0.4; } }
         
-        /* تنسيق قنوات الإرسال الموحدة في صف واحد */
         .channels-row { display: flex; gap: 8px; justify-content: flex-start; align-items: center; width: 100%; }
         .channel-badge { flex: 1; padding: 8px 10px; border-radius: 8px; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 4px; user-select: none; transition: all 0.2s ease; white-space: nowrap; }
         
-        /* قنوات ملونة وجذابة */
         .channel-active { background: rgba(16, 185, 129, 0.12); color: #34D399; border: 1px solid rgba(16, 185, 129, 0.4); }
         .channel-whatsapp { background: rgba(37, 211, 102, 0.12); color: #25D366; border: 1px solid rgba(37, 211, 102, 0.3); }
         .channel-sms { background: rgba(59, 130, 246, 0.12); color: #60A5FA; border: 1px solid rgba(59, 130, 246, 0.3); }
         
-        /* تأثير الماوس لمنع النقر الفضولي مع الحفاظ على التباين */
         .channel-whatsapp:hover, .channel-sms:hover { cursor: not-allowed; background: rgba(239, 68, 68, 0.1); border-color: rgba(239, 68, 68, 0.4); color: #F87171; }
-        
-        /* نقاط محاكاة نظام التشغيل لتبدو كبرنامج حقيقي */
         .win-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
     </style>
 </head>
@@ -56,7 +51,7 @@
             </form>
             
             <div id="formSuccessMessage" style="display: none; padding: 15px; background: #EEF2FF; border: 1px solid #C7D2FE; color: #4F46E5; border-radius: 6px; font-weight: 600; font-size: 14px; text-align: center;">
-                🎉 Thank you! Your email has been secured. Now, look at the dashboard on the right to see your next step!
+                🎉 Thank you! Your email has been secured. Your live simulation request has been dispatched!
             </div>
         </div>
     </div>
@@ -79,6 +74,7 @@
                 <div id="progressBar" style="width: 0%; height: 8px; background-color: #10B981; border-radius: 4px; transition: width 0.2s;"></div>
             </div>
 
+            <div style="font-size: 12px; color: #64748B; margin-bottom: 12px; font-weight: 500;">👉 Step 1: Upload a file to unlock your Accountant Dashboard simulation</div>
             <button id="btnUploadInstantly" style="width: 100%; background: #4F46E5; color: white; padding: 12px; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 15px;">
                 Upload Document Instantly
             </button>
@@ -93,17 +89,17 @@
                     <span class="win-dot" style="background: #10B981;"></span>
                     <span style="font-weight: 600; font-size: 13px; color: #64748B; margin-left: 8px;">Docchaser Workspace v1.0</span>
                 </div>
-                <span style="background: rgba(16, 185, 129, 0.1); color: #10B981; font-size: 11px; padding: 4px 10px; border-radius: 6px; font-weight: 700; letter-spacing: 0.5px;">LIVE SYSTEM</span>
+                <span id="systemStatusBadge" style="background: rgba(245, 158, 11, 0.1); color: #F59E0B; font-size: 11px; padding: 4px 10px; border-radius: 6px; font-weight: 700; letter-spacing: 0.5px;">PENDING SETUP</span>
             </div>
             
-            <div style="background: #111827; padding: 16px; border-radius: 10px; border: 1px solid #1F2937; border-left: 4px solid #10B981; margin-bottom: 20px; box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);">
-                <div style="display: flex; justify-content: space-between; font-size: 11px; color: #34D399; font-weight: 700; margin-bottom: 6px; letter-spacing: 0.5px;">
-                    <span>📩 NEW DOCUMENT RECEIVED</span>
-                    <span class="pulse">● Just Now</span>
+            <div style="background: #111827; padding: 16px; border-radius: 10px; border: 1px solid #1F2937; border-left: 4px solid #F59E0B; id='statusCard'; margin-bottom: 20px; box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);" id="statusCard">
+                <div style="display: flex; justify-content: space-between; font-size: 11px; color: #F59E0B; font-weight: 700; margin-bottom: 6px; letter-spacing: 0.5px;" id="statusCardHeader">
+                    <span>⏳ FILE HELD IN SECURE CACHE</span>
+                    <span class="pulse">● Waiting for Destination</span>
                 </div>
                 <div id="dashboardFileName" style="font-size: 15px; font-weight: 600; color: #FFFFFF;">File: document_sample.jpg</div>
-                <div style="font-size: 12px; color: #94A3B8; margin-top: 6px; display: flex; align-items: center; gap: 4px;">
-                    <span>Status:</span> <strong style="color: #34D399;">Automated Follow-up Reminders Paused ✅</strong>
+                <div style="font-size: 12px; color: #94A3B8; margin-top: 6px;">
+                    Portal Status: <strong style="color: #F59E0B;" id="portalStatusText">Ready to dispatch simulation link... ⏳</strong>
                 </div>
             </div>
 
@@ -116,17 +112,17 @@
                 </div>
             </div>
 
-            <div style="border-top: 1px solid #1E293B; padding-top: 18px;">
-                <p style="font-size: 15px; color: #FFFFFF; margin: 0; font-weight: 600; display: flex; align-items: center; gap: 8px;">
-                    📬 Simulation Active: Check Your Inbox Now!
+            <div id="dynamicInstructionSection" style="border-top: 1px solid #1E293B; padding-top: 18px;">
+                <p style="font-size: 15px; color: #F59E0B; margin: 0; font-weight: 600; display: flex; align-items: center; gap: 8px;">
+                    🔒 Connect Destination Email to Test Live Receipt
                 </p>
                 <p style="font-size: 13px; color: #94A3B8; line-height: 1.6; margin-top: 6px; margin-bottom: 0;">
-                    We just triggered a live simulation link via our active <span style="color: #F1F5F9; font-weight: 500;">Email Channel</span>. Open your personal email right now to see exactly how clean, fast, and simple your clients will find this portal!
+                    To securely trigger the live client experience, <span style="color: #F1F5F9; font-weight: bold;">enter your professional email on the left form👈</span>. Our active Email Channel will immediately route this simulation to your inbox.
                 </p>
             </div>
             
-            <div style="margin-top: 20px; padding: 12px; background: rgba(79, 70, 229, 0.1); border-radius: 8px; border: 1px solid rgba(79, 70, 229, 0.2); font-size: 12px; color: #A5B4FC; text-align: center; font-weight: 500; letter-spacing: 0.2px;">
-                🚀 Experience the automated power of Docchaser firsthand.
+            <div id="dashboardFooterBadge" style="margin-top: 20px; padding: 12px; background: rgba(245, 158, 11, 0.05); border-radius: 8px; border: 1px solid rgba(245, 158, 11, 0.1); font-size: 12px; color: #FCD34D; text-align: center; font-weight: 500; letter-spacing: 0.2px;">
+                🔑 Enter email on the left to verify the automated workflow.
             </div>
         </div>
 
@@ -150,6 +146,14 @@
     const leadForm = document.getElementById('leadForm');
     const ctaQuestion = document.getElementById('ctaQuestion');
     const formSuccessMessage = document.getElementById('formSuccessMessage');
+
+    // الإمساك بعناصر لوحة التحكم لتحديثها ديناميكياً
+    const systemStatusBadge = document.getElementById('systemStatusBadge');
+    const statusCard = document.getElementById('statusCard');
+    const statusCardHeader = document.getElementById('statusCardHeader');
+    const portalStatusText = document.getElementById('portalStatusText');
+    const dynamicInstructionSection = document.getElementById('dynamicInstructionSection');
+    const dashboardFooterBadge = document.getElementById('dashboardFooterBadge');
 
     dropZone.addEventListener('click', () => { hiddenFilePicker.click(); });
 
@@ -191,6 +195,7 @@
         }, 120);
     });
 
+    // سحر التبديل التفاعلي الفوري عند ضغط العميل على إرسال الإيميل
     leadForm.addEventListener('submit', function(e) {
         e.preventDefault();
         
@@ -206,16 +211,46 @@
             headers: { 'Accept': 'application/json' }
         })
         .then(response => {
-            ctaQuestion.style.display = 'none';
-            leadForm.style.display = 'none';
-            formSuccessMessage.style.display = 'block';
+            executeStateChange();
         })
         .catch(error => {
-            ctaQuestion.style.display = 'none';
-            leadForm.style.display = 'none';
-            formSuccessMessage.style.display = 'block';
+            // كود الحماية الاحتياطي ليعمل التبديل البصري في كل الحالات
+            executeStateChange();
         });
     });
+
+    // دالة هندسية مخصصة لقلب حالة لوحة التحكم للون الأخضر والنشط فوراً
+    function executeStateChange() {
+        ctaQuestion.style.display = 'none';
+        leadForm.style.display = 'none';
+        formSuccessMessage.style.display = 'block';
+
+        // 1. تغيير الشارة العلوية إلى النظام الحي الأخضر
+        systemStatusBadge.innerText = "LIVE SYSTEM";
+        systemStatusBadge.style.background = "rgba(16, 185, 129, 0.1)";
+        systemStatusBadge.style.color = "#10B981";
+
+        // 2. تحديث بطاقة حالة الملف للأخضر الناجح
+        statusCard.style.borderLeftColor = "#10B981";
+        statusCardHeader.style.color = "#34D399";
+        statusCardHeader.innerHTML = '<span>📩 NEW DOCUMENT RECEIVED SUCCESSFULLY</span><span class="pulse">● Just Now</span>';
+        portalStatusText.innerText = "Automated Follow-up Reminders Paused ✅";
+        portalStatusText.style.color = "#34D399";
+
+        // 3. تحديث مساحة التعليمات للرسالة التشويقية الحية
+        dynamicInstructionSection.innerHTML = `
+            <p style="font-size: 15px; color: #FFFFFF; margin: 0; font-weight: 600;">📬 Simulation Active: Check Your Inbox Now!</p>
+            <p style="font-size: 13px; color: #94A3B8; line-height: 1.6; margin-top: 6px; margin-bottom: 0;">
+                We just triggered a live simulation link via our active <span style="color: #F1F5F9; font-weight: bold;">Email Channel</span>. Open your personal email right now to see exactly how clean, fast, and simple your clients will find this portal!
+            </p>
+        `;
+
+        // 4. تحديث التذييل السفلي
+        dashboardFooterBadge.style.background = "rgba(79, 70, 229, 0.1)";
+        dashboardFooterBadge.style.borderColor = "rgba(79, 70, 229, 0.2)";
+        dashboardFooterBadge.style.color = "#A5B4FC";
+        dashboardFooterBadge.innerText = "🚀 Experience the automated power of Docchaser firsthand.";
+    }
 </script>
 
 </body>
